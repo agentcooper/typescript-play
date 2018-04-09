@@ -14,9 +14,11 @@ Differences from https://www.typescriptlang.org/play:
 
 ## Install
 
-`npm install`
-`npm run fetch-schema`
-`npm run get-latest-typescript`
+```
+npm install
+npm run fetch-schema
+npm run get-latest-typescript
+```
 
 ## Start
 
