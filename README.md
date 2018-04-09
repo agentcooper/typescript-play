@@ -1,8 +1,8 @@
 # TypeScript playground
 
-Better version of https://www.typescriptlang.org/play.
+https://agentcooper.github.io/typescript-play/
 
-### Differences
+### Differences from https://www.typescriptlang.org/play
 
 * All strict options turned on by default
 * More available compiler options
