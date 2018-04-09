@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font: normal 16px/1.4em -apple-system, system-ui, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
+    "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+header {
+  display: flex;
+  background-color: #294e80;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#playground {
+  display: flex;
+  flex: 1;
+}
+
+#input {
+  flex: 1;
+  overflow: hidden;
+}
+
+#output {
+  flex: 1;
+  overflow: hidden;
+}
+
+#version {
+  transition: opacity 0.3s;
+  margin-left: 0.3em;
+  width: 3em;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  left: -1em;
+  padding: 0 1em 1em;
+
+  z-index: 100;
+  background-color: #294e80;
+  color: white;
+  font-size: 80%;
+}
+
+.popup ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.popup li {
+  padding: 0.5em 0;
+}
+
+.button {
+  cursor: pointer;
+}
+.button:hover {
+  color: #ffa700;
+}
+
+.popup-on-hover {
+  position: relative;
+}
+
+.popup-on-hover:hover .popup {
+  display: inline-block;
+}
+
+.popup-on-hover:hover .popup-header {
+  color: #ffa700;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.header-item {
+  margin-left: 1em;
+}
+
+.compact-list li {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
