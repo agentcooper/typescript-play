@@ -121,11 +121,11 @@ const UI = {
 
   selectVersion(version) {
     if (version === window.CONFIG.getLatestVersion()) {
-      location.href = `${window.CONFIG.baseUrl}/${location.hash}`;
+      location.href = `${window.CONFIG.baseUrl}${location.hash}`;
       return false;
     }
 
-    location.href = `${window.CONFIG.baseUrl}/?ts=${version}${location.hash}`;
+    location.href = `${window.CONFIG.baseUrl}?ts=${version}${location.hash}`;
     return false;
   },
 
