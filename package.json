@@ -1,0 +1,18 @@
+{
+  "name": "typescript-play",
+  "version": "0.0.1",
+  "description": "Better TypeScript playground",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve ./public",
+    "clean": "rm -rf monaco-typescript && rm -rf public/monaco-typescript",
+    "get-typescript": "./scripts/get-typescript.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^6.5.3"
+  }
+}

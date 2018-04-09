@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>TypeScript playground</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+	<script src="env.js"></script>
+	<script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+	<script>
+		window.CONFIG = {
+			availableTSVersions: {
+				// https://unpkg.com/monaco-editor@0.11.1/
+				'2.7.2': { monaco: '0.11.1' },
+				'2.4.1': { monaco: '0.10.0' },
+
+				...(window.localTSVersion || {})
+			},
+
+			getLatestVersion() {
+				return Object.keys(this.availableTSVersions).sort().pop();
+			},
+
+			useTSVersion(version) {
+				if (this.availableTSVersions[version]) {
+					this.TSVersion = version;
+				} else {
+					alert(`Version '${version}' is not available, using ${this.TSVersion}`);
+				}
+			},
+
+			getMonacoVersion() {
+				return this.availableTSVersions[this.TSVersion].monaco;
+			},
+
+			getAdditionalPaths() {
+				const lib = this.availableTSVersions[this.TSVersion].lib;
+
+				return lib ?
+					{
+						'vs/language/typescript': lib
+					} : {};
+			}
+		}
+
+		window.CONFIG.TSVersion = window.CONFIG.getLatestVersion();
+		console.log('window.CONFIG', window.CONFIG);
+
+		const params = new URLSearchParams(location.search);
+		if (params.has('ts')) {
+			window.CONFIG.useTSVersion(params.get('ts'));
+		}
+
+		require.config({
+			paths: {
+				vs: `https://unpkg.com/monaco-editor@${window.CONFIG.getMonacoVersion()}/min/vs`,
+				...window.CONFIG.getAdditionalPaths(),
+			},
+			ignoreDuplicateModules: ["vs/editor/editor.main"],
+		});
+	</script>
+	<div id="app">
+		<header>
+			<div class="header-item">
+				<p>TypeScript</p>
+			</div>
+
+			<div style="opacity: 0;" id="version">
+				<p class="popup-header" id="version-current">?</p>
+				<div class="popup" id="version-popup" style="font-size: 100%;">
+					Loading...
+				</div>
+			</div>
+
+			<div class="header-item popup-on-hover" id="examples">
+				<p class="popup-header">Examples</p>
+				<div class="popup" style="min-width: 20em;">
+					<ul>
+						<li class="button" data-example="classic-javascript">
+							Classic JavaScript
+						</li>
+						<li class="button" data-example="adding-types">
+							Adding Types
+						</li>
+						<li class="button" data-example="using-classes">
+							Using Classes
+						</li>
+						<li class="button" data-example="using-inheritance">
+							Using Inheritance
+						</li>
+						<li class="button" data-example="using-generics">
+							Using Generics
+						</li>
+						<li class="button" data-example="unions-and-type-guards">
+							Unions and Type Guards
+						</li>
+						<li class="button" data-example="building-a-raytracer">
+							Building a Raytracer
+						</li>
+					</ul>
+					<ul>
+						<li class="button" data-example="mapped-types">
+							Mapped types (Readonly, Partial)
+						</li>
+						<li class="button" data-example="bounded-polymorphism">
+							Bounded polymorphism
+						</li>
+						<li class="button" data-example="conditional-types">
+							Conditional types
+						</li>
+					</ul>
+				</div>
+			</div>
+			<script>
+				document.querySelector("#examples").addEventListener("click", event => {
+					if (event.target.matches("[data-example]")) {
+						const exampleName = event.target.dataset.example;
+						UI.selectExample(exampleName);
+					}
+				});
+			</script>
+
+			<div class="header-item popup-on-hover" id="settings">
+				<p class="popup-header">Options</p>
+				<div class="popup" id="settings-popup" style="min-width: 20em;">
+					Loading...
+				</div>
+			</div>
+
+			<div class="header-item popup-on-hover" id="about">
+				<p class="popup-header">About</p>
+				<div class="popup" id="about-popup" style="min-width: 25em;">
+					<div>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</div>
+
+					<div style="margin-top: 2em;">Playground allows you to compile TypeScript and see JavaScript output.</div>
+
+					<div style="margin-top: 2em;">Differences from
+						<a href="http://www.typescriptlang.org/play/index.html" target="_blank">typescriptlang.org/play</a>:
+					</div>
+					<ul class="compact-list" style="margin-top: 0.5em;">
+						<li>&ndash; All strict options turned on by default</li>
+						<li>&ndash; More available compiler options</li>
+						<li>&ndash; Ability to switch TypeScript version</li>
+						<li>&ndash; More space for code</li>
+						<li>&ndash; More examples</li>
+						<li>&ndash; Quicker sharing, URL updates as you type</li>
+						<li>&ndash; Shorter sharing URLs</li>
+						<li>
+							&ndash;
+							<a href="http://github.com">Open source</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<p style="margin-left: auto; margin-right: 1em;">
+				<a style="border: none;" href="https://github.com/Microsoft/TypeScript/releases">TS changelog</a>
+			</p>
+			<p style="margin-right: 1em;">
+				<a style="border: none;" href="https://www.typescriptlang.org/docs/home.html">TS docs</a>
+			</p>
+		</header>
+		<main id="playground">
+			<section id="input"></section>
+			<section id="output"></section>
+		</main>
+	</div>
+
+	<script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
+	<script src="main.js"></script>
+	<script>
+		require(["vs/editor/editor.main"], main);
+	</script>
+</body>
+
+</html>
