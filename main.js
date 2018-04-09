@@ -203,16 +203,15 @@ async function main() {
     monaco.Uri.parse("output.js"),
   );
 
-  const inputEditor = monaco.editor.create(document.getElementById("input"), {
-    model: State.inputModel,
-    ...sharedEditorOptions,
-  });
+  const inputEditor = monaco.editor.create(
+    document.getElementById("input"),
+    Object.assign({ model: State.inputModel }, sharedEditorOptions),
+  );
 
-  const outputEditor = monaco.editor.create(document.getElementById("output"), {
-    model: State.outputModel,
-    readOnly: true,
-    ...sharedEditorOptions,
-  });
+  const outputEditor = monaco.editor.create(
+    document.getElementById("output"),
+    Object.assign({ model: State.outputModel }, sharedEditorOptions),
+  );
 
   function updateHash() {
     location.hash = `code/${LZString.compressToEncodedURIComponent(

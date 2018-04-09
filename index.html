@@ -14,13 +14,11 @@
 	<script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
 	<script>
 		window.CONFIG = {
-			availableTSVersions: {
+			availableTSVersions: Object.assign({
 				// https://unpkg.com/monaco-editor@0.11.1/
 				'2.7.2': { monaco: '0.11.1' },
 				'2.4.1': { monaco: '0.10.0' },
-
-				...(window.localTSVersion || {})
-			},
+			}, window.localTSVersion || {}),
 
 			baseUrl: location.protocol + '//' + location.host + location.pathname,
 
@@ -59,10 +57,9 @@
 		}
 
 		require.config({
-			paths: {
+			paths: Object.assign({
 				vs: `https://unpkg.com/monaco-editor@${window.CONFIG.getMonacoVersion()}/min/vs`,
-				...window.CONFIG.getAdditionalPaths(),
-			},
+			}, window.CONFIG.getAdditionalPaths()),
 			ignoreDuplicateModules: ["vs/editor/editor.main"],
 		});
 	</script>
@@ -161,10 +158,10 @@
 			</div>
 
 			<p style="margin-left: auto; margin-right: 1em;">
-				<a style="border: none;" href="https://github.com/Microsoft/TypeScript/releases">TS changelog</a>
+				<a style="border: none;" target="_blank" href="https://github.com/Microsoft/TypeScript/releases">TS changelog</a>
 			</p>
 			<p style="margin-right: 1em;">
-				<a style="border: none;" href="https://www.typescriptlang.org/docs/home.html">TS docs</a>
+				<a style="border: none;" target="_blank" href="https://www.typescriptlang.org/docs/home.html">TS docs</a>
 			</p>
 		</header>
 		<main id="playground">
