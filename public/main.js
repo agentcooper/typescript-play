@@ -42,7 +42,7 @@ const UI = {
 
   async fetchTooltips() {
     try {
-      const res = await fetch("//json.schemastore.org/tsconfig");
+      const res = await fetch(`${window.CONFIG.baseUrl}schema/tsconfig.json`);
       const json = await res.json();
 
       for (const [propertyName, property] of Object.entries(
@@ -52,6 +52,7 @@ const UI = {
         this.tooltips[propertyName] = property.description;
       }
     } catch (e) {
+      console.error(e);
       // not critical
     }
   },

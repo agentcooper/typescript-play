@@ -7,7 +7,7 @@ rm -rf monaco-typescript
 set -o nounset
 set -o errexit
 
-git clone https://github.com/Microsoft/monaco-typescript monaco-typescript
+git clone https://github.com/Microsoft/monaco-typescript
 
 pushd monaco-typescript
 
@@ -19,7 +19,7 @@ INSTALLED_VERSION=`node -p "require('typescript').version"`
 
 popd
 
-mkdir -p public/monaco-typescript/${INSTALLED_VERSION}
-cp -r monaco-typescript/release/min/ public/monaco-typescript/${INSTALLED_VERSION}
+mkdir -vp ./public/monaco-typescript/${INSTALLED_VERSION}
+cp -vr ./monaco-typescript/release/min/ ./public/monaco-typescript/${INSTALLED_VERSION}
 
 echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.11.1', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js

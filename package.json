@@ -8,7 +8,9 @@
     "start": "serve ./public",
     "clean": "rm -rf monaco-typescript && rm -rf public/monaco-typescript",
     "get-typescript": "./scripts/get-typescript.sh",
-    "deploy": "gh-pages --dist=public"
+    "deploy": "gh-pages --dist=public",
+    "fetch-schema":
+      "curl http://json.schemastore.org/tsconfig > public/schema/tsconfig.json"
   },
   "keywords": [],
   "author": "",
