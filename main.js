@@ -86,6 +86,14 @@ const UI = {
 
     node.style.opacity = 1;
     node.classList.toggle("popup-on-hover", true);
+
+    this.hideSpinner();
+  },
+
+  hideSpinner() {
+    document
+      .querySelector(".spinner")
+      .classList.toggle("spinner--hidden", true);
   },
 
   renderSettings() {

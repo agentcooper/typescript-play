@@ -105,3 +105,25 @@ a {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
+
+.spinner {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 0.25rem solid white;
+  border-bottom: 0.25rem solid rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+
+  opacity: 1;
+  transition: 0.3s opacity;
+}
+
+.spinner--hidden {
+  opacity: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
