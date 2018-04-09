@@ -7,12 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "serve ./public",
     "clean": "rm -rf monaco-typescript && rm -rf public/monaco-typescript",
-    "get-typescript": "./scripts/get-typescript.sh"
+    "get-typescript": "./scripts/get-typescript.sh",
+    "deploy": "gh-pages --dist=public"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "serve": "^6.5.3"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }

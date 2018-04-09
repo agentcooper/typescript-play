@@ -121,17 +121,19 @@ const UI = {
 
   selectVersion(version) {
     if (version === window.CONFIG.getLatestVersion()) {
-      location.href = `/${location.hash}`;
+      location.href = `${window.CONFIG.baseUrl}${location.hash}`;
       return false;
     }
 
-    location.href = `/?ts=${version}${location.hash}`;
+    location.href = `${window.CONFIG.baseUrl}?ts=${version}${location.hash}`;
     return false;
   },
 
   async selectExample(exampleName) {
     try {
-      const res = await fetch(`/examples/${exampleName}.ts`);
+      const res = await fetch(
+        `${window.CONFIG.baseUrl}examples/${exampleName}.ts`,
+      );
       const code = await res.text();
       UI.shouldUpdateHash = false;
       State.inputModel.setValue(code);

@@ -22,6 +22,8 @@
 				...(window.localTSVersion || {})
 			},
 
+			baseUrl: location.protocol + '//' + location.host + location.pathname,
+
 			getLatestVersion() {
 				return Object.keys(this.availableTSVersions).sort().pop();
 			},
@@ -43,7 +45,7 @@
 
 				return lib ?
 					{
-						'vs/language/typescript': lib
+						'vs/language/typescript': `${this.baseUrl}${lib}`
 					} : {};
 			}
 		}
