@@ -41,9 +41,11 @@
 			getAdditionalPaths() {
 				const lib = this.availableTSVersions[this.TSVersion].lib;
 
+				const base = location.protocol + '//' + location.host + location.pathname;
+
 				return lib ?
 					{
-						'vs/language/typescript': lib
+						'vs/language/typescript': `${base}${lib}`
 					} : {};
 			}
 		}
