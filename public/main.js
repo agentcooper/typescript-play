@@ -264,4 +264,36 @@ async function main() {
   UI.shouldUpdateHash = true;
 
   UI.renderAvailableVersions();
+
+  /* Run */
+
+  function runJavaScript() {
+    // to hide the stack trace
+    setTimeout(() => {
+      eval(State.outputModel.getValue());
+    }, 0);
+  }
+
+  inputEditor.addCommand(
+    monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+    runJavaScript,
+  );
+
+  outputEditor.addCommand(
+    monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+    runJavaScript,
+  );
+
+  // if the focus is outside the editor
+  window.addEventListener("keydown", event => {
+    if (
+      event.keyCode === 13 &&
+      (event.metaKey || event.ctrlKey) &&
+      event.target instanceof Node &&
+      event.target === document.body
+    ) {
+      event.preventDefault();
+      runJavaScript();
+    }
+  });
 }

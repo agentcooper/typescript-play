@@ -134,6 +134,19 @@
 				</div>
 			</div>
 
+			<div class="header-item popup-on-hover" id="run">
+				<p class="popup-header">Run</p>
+				<div class="popup" id="run-popup" style="min-width: 20em;">
+					<script>
+						const isMac = navigator.userAgent.indexOf('Mac OS X') != -1;
+						const key = isMac ? '⌘' : 'Ctrl';
+						document.write(`
+							<kbd>Use ${key} + Enter</kbd> to run compiled JavaScript in the browser console.
+						`);
+					</script>
+				</div>
+			</div>
+
 			<div class="header-item popup-on-hover" id="about">
 				<p class="popup-header">About</p>
 				<div class="popup" id="about-popup" style="min-width: 25em;">
