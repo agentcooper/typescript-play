@@ -24,6 +24,15 @@ npm run get-latest-typescript
 
 `npm start`
 
-### Updating TypeScript
+## Updating TypeScript
 
 `npm run get-latest-typescript`
+
+## Browser compatibility
+
+Tested with:
+
+* Chrome 65
+* Safari 11
+* Firefox 58
+* Microsoft Edge 41
