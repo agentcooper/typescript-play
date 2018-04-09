@@ -42,7 +42,7 @@ const UI = {
 
   async fetchTooltips() {
     try {
-      const res = await fetch("http://json.schemastore.org/tsconfig");
+      const res = await fetch("//json.schemastore.org/tsconfig");
       const json = await res.json();
 
       for (const [propertyName, property] of Object.entries(
