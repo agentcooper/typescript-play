@@ -1,3 +1,4 @@
 node_modules
 monaco-typescript
 public/schema
+public/env.js
