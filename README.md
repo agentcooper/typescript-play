@@ -2,7 +2,7 @@
 
 https://agentcooper.github.io/typescript-play/
 
-### Differences from https://www.typescriptlang.org/play
+Differences from https://www.typescriptlang.org/play:
 
 * All strict options turned on by default
 * More available compiler options
