@@ -28,6 +28,7 @@ const compilerOptions = {
 const sharedEditorOptions = {
   minimap: { enabled: false },
   automaticLayout: true,
+  scrollBeyondLastLine: false,
 };
 
 const State = {
