@@ -132,7 +132,7 @@ const UI = {
   async selectExample(exampleName) {
     try {
       const res = await fetch(
-        `${window.config.baseUrl}examples/${exampleName}.ts`,
+        `${window.CONFIG.baseUrl}examples/${exampleName}.ts`,
       );
       const code = await res.text();
       UI.shouldUpdateHash = false;
