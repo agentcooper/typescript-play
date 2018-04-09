@@ -40,7 +40,7 @@ const UI = {
 
   shouldUpdateHash: false,
 
-  async fetchTooltips() {
+  fetchTooltips: async function() {
     try {
       const res = await fetch(`${window.CONFIG.baseUrl}schema/tsconfig.json`);
       const json = await res.json();
@@ -138,7 +138,7 @@ const UI = {
     return false;
   },
 
-  async selectExample(exampleName) {
+  selectExample: async function(exampleName) {
     try {
       const res = await fetch(
         `${window.CONFIG.baseUrl}examples/${exampleName}.ts`,
@@ -153,7 +153,7 @@ const UI = {
     }
   },
 
-  async setCodeFromHash() {
+  setCodeFromHash: async function() {
     if (location.hash.startsWith("#example")) {
       const exampleName = location.hash.replace("#example/", "").trim();
       UI.selectExample(exampleName);
