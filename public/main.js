@@ -1,66 +1,69 @@
 // whoa, no typescript and no compilation!
 
-const compilerOptions = {
-  noImplicitAny: true,
-  strictNullChecks: true,
-  strictFunctionTypes: true,
-  strictPropertyInitialization: true,
-  noImplicitThis: true,
-  noImplicitReturns: true,
+async function main() {
+  const compilerOptions = {
+    noImplicitAny: true,
+    strictNullChecks: true,
+    strictFunctionTypes: true,
+    strictPropertyInitialization: true,
+    noImplicitThis: true,
+    noImplicitReturns: true,
 
-  alwaysStrict: true,
-  allowUnreachableCode: false,
-  allowUnusedLabels: false,
+    alwaysStrict: true,
+    allowUnreachableCode: false,
+    allowUnusedLabels: false,
 
-  downlevelIteration: false,
-  noEmitHelpers: false,
-  noLib: false,
-  noStrictGenericChecks: false,
-  esModuleInterop: false,
+    downlevelIteration: false,
+    noEmitHelpers: false,
+    noLib: false,
+    noStrictGenericChecks: false,
+    esModuleInterop: false,
 
-  noUnusedLocals: false,
-  noUnusedParameters: false,
-  preserveConstEnums: false,
-  removeComments: false,
-  skipLibCheck: false,
-};
+    noUnusedLocals: false,
+    noUnusedParameters: false,
+    preserveConstEnums: false,
+    removeComments: false,
+    skipLibCheck: false,
 
-const sharedEditorOptions = {
-  minimap: { enabled: false },
-  automaticLayout: true,
-  scrollBeyondLastLine: false,
-};
+    target: monaco.languages.typescript.ScriptTarget.ES3,
+  };
 
-const State = {
-  inputModel: null,
-  outputModel: null,
-};
+  const sharedEditorOptions = {
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+  };
 
-const UI = {
-  tooltips: {},
+  const State = {
+    inputModel: null,
+    outputModel: null,
+  };
 
-  shouldUpdateHash: false,
+  window.UI = {
+    tooltips: {},
 
-  fetchTooltips: async function() {
-    try {
-      const res = await fetch(`${window.CONFIG.baseUrl}schema/tsconfig.json`);
-      const json = await res.json();
+    shouldUpdateHash: false,
 
-      for (const [propertyName, property] of Object.entries(
-        json.definitions.compilerOptionsDefinition.properties.compilerOptions
-          .properties,
-      )) {
-        this.tooltips[propertyName] = property.description;
+    fetchTooltips: async function() {
+      try {
+        const res = await fetch(`${window.CONFIG.baseUrl}schema/tsconfig.json`);
+        const json = await res.json();
+
+        for (const [propertyName, property] of Object.entries(
+          json.definitions.compilerOptionsDefinition.properties.compilerOptions
+            .properties,
+        )) {
+          this.tooltips[propertyName] = property.description;
+        }
+      } catch (e) {
+        console.error(e);
+        // not critical
       }
-    } catch (e) {
-      console.error(e);
-      // not critical
-    }
-  },
+    },
 
-  renderAvailableVersions() {
-    const node = document.querySelector("#version-popup");
-    const html = `
+    renderAvailableVersions() {
+      const node = document.querySelector("#version-popup");
+      const html = `
     <ul>
     ${Object.keys(window.CONFIG.availableTSVersions)
       .sort()
@@ -72,37 +75,59 @@ const UI = {
     </ul>
     `;
 
-    node.innerHTML = html;
-  },
+      node.innerHTML = html;
+    },
 
-  renderVersion() {
-    if (!ts.version) {
-      return;
-    }
+    renderVersion() {
+      if (!ts.version) {
+        return;
+      }
 
-    const node = document.querySelector("#version");
-    const childNode = node.querySelector("#version-current");
+      const node = document.querySelector("#version");
+      const childNode = node.querySelector("#version-current");
 
-    childNode.textContent = `${ts.version}`;
+      childNode.textContent = `${ts.version}`;
 
-    node.style.opacity = 1;
-    node.classList.toggle("popup-on-hover", true);
+      node.style.opacity = 1;
+      node.classList.toggle("popup-on-hover", true);
 
-    this.hideSpinner();
-  },
+      this.hideSpinner();
+    },
 
-  hideSpinner() {
-    document
-      .querySelector(".spinner")
-      .classList.toggle("spinner--hidden", true);
-  },
+    hideSpinner() {
+      document
+        .querySelector(".spinner")
+        .classList.toggle("spinner--hidden", true);
+    },
 
-  renderSettings() {
-    const node = document.querySelector("#settings-popup");
+    renderSettings() {
+      const node = document.querySelector("#settings-popup");
 
-    const html = `
-    <ul>
+      const html = `
+      <label>
+      Target
+    <select onchange="console.log(event.target.value); UI.updateCompileOptions('target', monaco.languages.typescript.ScriptTarget[event.target.value]);">
+    ${Object.keys(monaco.languages.typescript.ScriptTarget)
+      .filter(key => isNaN(Number(key)))
+      .map(key => {
+        if (key === "Latest") {
+          // hide Latest
+          return "";
+        }
+
+        const isSelected =
+          monaco.languages.typescript.ScriptTarget[key] ===
+          compilerOptions.target;
+
+        return `<option ${
+          isSelected ? "selected" : ""
+        } value="${key}">${key}</option>`;
+      })}
+    </select>
+    </label>
+    <ul style="margin-top: 1em;">
     ${Object.entries(compilerOptions)
+      .filter(([_, value]) => typeof value === "boolean")
       .map(([key, value]) => {
         return `<li style="margin: 0; padding: 0;" title="${UI.tooltips[key] ||
           ""}"><label class="button" style="user-select: none; display: block;"><input class="pointer" onchange="javascript:UI.updateCompileOptions(event.target.name, event.target.checked);" name="${key}" type="checkbox" ${
@@ -118,78 +143,79 @@ const UI = {
     </p>
     `;
 
-    node.innerHTML = html;
-  },
+      node.innerHTML = html;
+    },
 
-  console() {
-    console.log(`Using TypeScript ${window.ts.version}`);
+    console() {
+      console.log(`Using TypeScript ${window.ts.version}`);
 
-    console.log("Available globals:");
-    console.log("\twindow.ts", window.ts);
-    console.log("\twindow.client", window.client);
-  },
+      console.log("Available globals:");
+      console.log("\twindow.ts", window.ts);
+      console.log("\twindow.client", window.client);
+    },
 
-  selectVersion(version) {
-    if (version === window.CONFIG.getLatestVersion()) {
-      location.href = `${window.CONFIG.baseUrl}${location.hash}`;
+    selectVersion(version) {
+      if (version === window.CONFIG.getLatestVersion()) {
+        location.href = `${window.CONFIG.baseUrl}${location.hash}`;
+        return false;
+      }
+
+      location.href = `${window.CONFIG.baseUrl}?ts=${version}${location.hash}`;
       return false;
-    }
+    },
 
-    location.href = `${window.CONFIG.baseUrl}?ts=${version}${location.hash}`;
-    return false;
-  },
+    selectExample: async function(exampleName) {
+      try {
+        const res = await fetch(
+          `${window.CONFIG.baseUrl}examples/${exampleName}.ts`,
+        );
+        const code = await res.text();
+        UI.shouldUpdateHash = false;
+        State.inputModel.setValue(code);
+        location.hash = `example/${exampleName}`;
+        UI.shouldUpdateHash = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
 
-  selectExample: async function(exampleName) {
-    try {
-      const res = await fetch(
-        `${window.CONFIG.baseUrl}examples/${exampleName}.ts`,
+    setCodeFromHash: async function() {
+      if (location.hash.startsWith("#example")) {
+        const exampleName = location.hash.replace("#example/", "").trim();
+        UI.selectExample(exampleName);
+      }
+    },
+
+    updateCompileOptions(name, value) {
+      console.log(`${name} = ${value}`);
+
+      Object.assign(compilerOptions, {
+        [name]: value,
+      });
+
+      console.log("Updaring compiler options to", compilerOptions);
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
+        compilerOptions,
       );
-      const code = await res.text();
-      UI.shouldUpdateHash = false;
-      State.inputModel.setValue(code);
-      location.hash = `example/${exampleName}`;
-      UI.shouldUpdateHash = true;
-    } catch (e) {
-      console.log(e);
-    }
-  },
 
-  setCodeFromHash: async function() {
-    if (location.hash.startsWith("#example")) {
-      const exampleName = location.hash.replace("#example/", "").trim();
-      UI.selectExample(exampleName);
-    }
-  },
+      State.inputModel.setValue(State.inputModel.getValue());
 
-  updateCompileOptions(name, value) {
-    console.log(`${name} = ${value}`);
+      UI.renderSettings();
+    },
 
-    Object.assign(compilerOptions, {
-      [name]: value,
-    });
+    getInitialCode() {
+      if (location.hash.startsWith("#code")) {
+        const code = location.hash.replace("#code/", "").trim();
+        return LZString.decompressFromEncodedURIComponent(code);
+      }
 
-    console.log("Updaring compiler options to", compilerOptions);
-    monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
-      compilerOptions,
-    );
-
-    UI.renderSettings();
-  },
-
-  getInitialCode() {
-    if (location.hash.startsWith("#code")) {
-      const code = location.hash.replace("#code/", "").trim();
-      return LZString.decompressFromEncodedURIComponent(code);
-    }
-
-    return `
+      return `
 const message: string = 'hello world';
 console.log(message);
   `.trim();
-  },
-};
+    },
+  };
 
-async function main() {
   window.MonacoEnvironment = {
     getWorkerUrl: function(workerId, label) {
       return `worker.js?version=${window.CONFIG.getMonacoVersion()}`;
