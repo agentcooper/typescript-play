@@ -17,7 +17,7 @@ Differences from https://www.typescriptlang.org/play:
 ```
 npm install
 npm run fetch-schema
-npm run get-latest-typescript
+npm run get-typescript
 ```
 
 ## Start
@@ -26,7 +26,7 @@ npm run get-latest-typescript
 
 ## Updating TypeScript
 
-`npm run get-latest-typescript`
+`npm run get-typescript`
 
 ## Browser compatibility
 
