@@ -26,7 +26,9 @@ npm run get-typescript
 
 ## Updating TypeScript
 
-`npm run get-typescript`
+Playground relies on [UNPKG](https://unpkg.com) to fetch `monaco-editor` (contains `typescript` through `monaco-typescript` package).
+
+In case if `monaco-editor` is not updated to the latest TypeScript, the latest version can be built with `npm run get-typescript` and served locally.
 
 ## Browser compatibility
 
