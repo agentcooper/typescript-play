@@ -36,3 +36,10 @@ Tested with:
 * Safari 11
 * Firefox 58
 * Microsoft Edge 41
+
+## Prior art
+
+* https://fabiandev.github.io/typescript-playground/
+* http://hi104.github.io/typescript-playground-on-ace/
+* http://drake7707.github.io/Typescript-Editor/
+* http://niutech.github.io/typescript-interpret/
