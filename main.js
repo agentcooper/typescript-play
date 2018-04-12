@@ -1,5 +1,92 @@
 // whoa, no typescript and no compilation!
 
+const LibManager = {
+  libs: {},
+
+  coreLibPath: `https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/`,
+
+  getReferencePaths(input) {
+    const rx = /<reference path="([^"]+)"\s\/>/;
+    return (input.match(new RegExp(rx.source, "g")) || []).map(s => {
+      const match = s.match(rx);
+      if (match && match.length >= 2) {
+        return match[1];
+      } else {
+        throw new Error(`Error parsing: "${s}".`);
+      }
+    });
+  },
+
+  basename(url) {
+    const parts = url.split("/");
+    if (parts.length === 0) {
+      throw new Error(`Bad url: "${url}"`);
+    }
+    return parts[parts.length - 1];
+  },
+
+  addLib: async function(path, ...args) {
+    if (path.indexOf("http") === 0) {
+      return this._addRemoteLib(path, ...args);
+    }
+    return this._addCoreLib(path, ...args);
+  },
+
+  _addCoreLib: async function(fileName, ...args) {
+    return this._addRemoteLib(`${this.coreLibPath}${fileName}`, ...args);
+  },
+
+  _addRemoteLib: async function(
+    url,
+    stripNoDefaultLib = true,
+    followReferences = true,
+  ) {
+    const fileName = this.basename(url);
+
+    if (this.libs[fileName]) {
+      return;
+    }
+
+    UI.toggleSpinner(true);
+    const res = await fetch(url);
+    if (res.status === 404) {
+      console.log(
+        `Check https://unpkg.com/typescript@${window.CONFIG.TSVersion}/lib/`,
+      );
+    }
+    const rawText = await res.text();
+
+    UI.toggleSpinner(false);
+
+    const text = stripNoDefaultLib
+      ? rawText.replace('/// <reference no-default-lib="true"/>', "")
+      : rawText;
+
+    if (followReferences) {
+      const paths = this.getReferencePaths(text);
+      if (paths.length > 0) {
+        console.log(`${fileName} depends on ${paths.join(", ")}`);
+        for (const path of paths) {
+          await this._addCoreLib(path, stripNoDefaultLib, followReferences);
+        }
+      }
+    }
+
+    const lib = monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      text,
+      fileName,
+    );
+
+    console.groupCollapsed(`Added '${fileName}'`);
+    console.log(text);
+    console.groupEnd();
+
+    this.libs[fileName] = lib;
+
+    return lib;
+  },
+};
+
 async function main() {
   const compilerOptions = {
     noImplicitAny: true,
@@ -48,8 +135,10 @@ async function main() {
 
     fetchTooltips: async function() {
       try {
+        this.toggleSpinner(true);
         const res = await fetch(`${window.CONFIG.baseUrl}schema/tsconfig.json`);
         const json = await res.json();
+        this.toggleSpinner(false);
 
         for (const [propertyName, property] of Object.entries(
           json.definitions.compilerOptionsDefinition.properties.compilerOptions
@@ -93,13 +182,13 @@ async function main() {
       node.style.opacity = 1;
       node.classList.toggle("popup-on-hover", true);
 
-      this.hideSpinner();
+      this.toggleSpinner(false);
     },
 
-    hideSpinner() {
+    toggleSpinner(shouldShow) {
       document
         .querySelector(".spinner")
-        .classList.toggle("spinner--hidden", true);
+        .classList.toggle("spinner--hidden", !shouldShow);
     },
 
     renderSettings() {
@@ -229,6 +318,10 @@ console.log(message);
       return `worker.js?version=${window.CONFIG.getMonacoVersion()}`;
     },
   };
+
+  for (const path of window.CONFIG.extraLibs) {
+    await LibManager.addLib(path);
+  }
 
   monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
     compilerOptions,

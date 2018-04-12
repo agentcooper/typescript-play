@@ -12,14 +12,19 @@
 <body>
 	<script src="env.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/url-search-params/0.10.0/url-search-params.js"></script>
-	<script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+	<script src="https://unpkg.com/monaco-editor@0.12.0/min/vs/loader.js"></script>
 	<script>
+		const params = new URLSearchParams(location.search);
+
 		window.CONFIG = {
-			availableTSVersions: Object.assign({
-				// https://unpkg.com/monaco-editor@0.11.1/
+			availableTSVersions: Object.assign({}, window.localTSVersion || {}, {
+				// https://unpkg.com/monaco-editor/
+				'2.8.1': { monaco: '0.12.0' },
 				'2.7.2': { monaco: '0.11.1' },
 				'2.4.1': { monaco: '0.10.0' },
-			}, window.localTSVersion || {}),
+			}, {}),
+
+			extraLibs: params.has('lib') ? params.get('lib').split(',') : [],
 
 			baseUrl: location.protocol + '//' + location.host + location.pathname,
 
@@ -52,7 +57,6 @@
 		window.CONFIG.TSVersion = window.CONFIG.getLatestVersion();
 		console.log('window.CONFIG', window.CONFIG);
 
-		const params = new URLSearchParams(location.search);
 		if (params.has('ts')) {
 			window.CONFIG.useTSVersion(params.get('ts'));
 		}
@@ -121,6 +125,9 @@
 						<li class="button" data-example="decorators">
 							Decorators (experimental)
 						</li>
+						<!-- <li class="button" data-example="async-generators">
+							Async generators
+						</li> -->
 					</ul>
 				</div>
 			</div>
