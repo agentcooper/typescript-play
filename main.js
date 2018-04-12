@@ -17,13 +17,15 @@ async function main() {
     noEmitHelpers: false,
     noLib: false,
     noStrictGenericChecks: false,
-    esModuleInterop: false,
-
     noUnusedLocals: false,
     noUnusedParameters: false,
+
+    esModuleInterop: false,
     preserveConstEnums: false,
     removeComments: false,
     skipLibCheck: false,
+
+    experimentalDecorators: false,
 
     target: monaco.languages.typescript.ScriptTarget.ES3,
   };
