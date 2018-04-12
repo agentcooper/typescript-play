@@ -186,6 +186,12 @@ async function main() {
       }
     },
 
+    refreshOutput() {
+      UI.shouldUpdateHash = false;
+      State.inputModel.setValue(State.inputModel.getValue());
+      UI.shouldUpdateHash = true;
+    },
+
     updateCompileOptions(name, value) {
       console.log(`${name} = ${value}`);
 
@@ -198,7 +204,7 @@ async function main() {
         compilerOptions,
       );
 
-      State.inputModel.setValue(State.inputModel.getValue());
+      UI.refreshOutput();
 
       UI.renderSettings();
     },
