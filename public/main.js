@@ -171,7 +171,7 @@ async function main() {
         );
         const code = await res.text();
         UI.shouldUpdateHash = false;
-        State.inputModel.setValue(code);
+        State.inputModel.setValue(code.trim());
         location.hash = `example/${exampleName}`;
         UI.shouldUpdateHash = true;
       } catch (e) {
