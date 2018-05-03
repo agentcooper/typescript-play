@@ -88,7 +88,7 @@ const LibManager = {
 };
 
 async function main() {
-  const compilerOptions = {
+  const defaultCompilerOptions = {
     noImplicitAny: true,
     strictNullChecks: true,
     strictFunctionTypes: true,
@@ -115,6 +115,32 @@ async function main() {
     experimentalDecorators: false,
 
     target: monaco.languages.typescript.ScriptTarget.ES3,
+  };
+
+  const urlDefaults = Object.entries(defaultCompilerOptions).reduce(
+    (acc, [key, value]) => {
+      if (params.has(key)) {
+        const urlValue = params.get(key);
+
+        if (urlValue === "true") {
+          acc[key] = true;
+        } else if (urlValue === "false") {
+          acc[key] = false;
+        } else if (!isNaN(parseInt(urlValue, 10))) {
+          acc[key] = parseInt(params.get(key), 10);
+        }
+      }
+
+      return acc;
+    },
+    {},
+  );
+
+  console.log("Url defaults", urlDefaults);
+
+  const compilerOptions = {
+    ...defaultCompilerOptions,
+    ...urlDefaults,
   };
 
   const sharedEditorOptions = {
@@ -283,6 +309,35 @@ async function main() {
       UI.shouldUpdateHash = true;
     },
 
+    updateURL() {
+      const diff = Object.entries(defaultCompilerOptions).reduce(
+        (acc, [key, value]) => {
+          if (value !== compilerOptions[key]) {
+            acc[key] = compilerOptions[key];
+          }
+
+          return acc;
+        },
+        {},
+      );
+
+      const hash = `code/${LZString.compressToEncodedURIComponent(
+        State.inputModel.getValue(),
+      )}`;
+
+      if (Object.keys(diff).length > 0) {
+        const queryString = Object.entries(diff)
+          .map(([key, value]) => {
+            return `${key}=${encodeURIComponent(value)}`;
+          })
+          .join("&");
+
+        window.history.replaceState({}, "", `/?${queryString}#${hash}`);
+      } else {
+        window.history.replaceState({}, "", `/#${hash}`);
+      }
+    },
+
     updateCompileOptions(name, value) {
       console.log(`${name} = ${value}`);
 
@@ -298,6 +353,8 @@ async function main() {
       UI.refreshOutput();
 
       UI.renderSettings();
+
+      UI.updateURL();
     },
 
     getInitialCode() {
@@ -349,12 +406,6 @@ console.log(message);
     Object.assign({ model: State.outputModel }, sharedEditorOptions),
   );
 
-  function updateHash() {
-    location.hash = `code/${LZString.compressToEncodedURIComponent(
-      State.inputModel.getValue(),
-    )}`;
-  }
-
   function updateOutput() {
     monaco.languages.typescript.getTypeScriptWorker().then(worker => {
       worker(State.inputModel.uri).then((client, a) => {
@@ -373,7 +424,7 @@ console.log(message);
     });
 
     if (UI.shouldUpdateHash) {
-      updateHash();
+      UI.updateURL();
     }
   }
 
