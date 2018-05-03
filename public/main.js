@@ -325,16 +325,28 @@ async function main() {
         State.inputModel.getValue(),
       )}`;
 
-      if (Object.keys(diff).length > 0) {
-        const queryString = Object.entries(diff)
+      const urlParams = {
+        ...diff,
+      };
+
+      if (params.has("ts")) {
+        urlParams["ts"] = params.get("ts");
+      }
+
+      if (Object.keys(urlParams).length > 0) {
+        const queryString = Object.entries(urlParams)
           .map(([key, value]) => {
             return `${key}=${encodeURIComponent(value)}`;
           })
           .join("&");
 
-        window.history.replaceState({}, "", `/?${queryString}#${hash}`);
+        window.history.replaceState(
+          {},
+          "",
+          `${window.CONFIG.baseUrl}?${queryString}#${hash}`,
+        );
       } else {
-        window.history.replaceState({}, "", `/#${hash}`);
+        window.history.replaceState({}, "", `${window.CONFIG.baseUrl}#${hash}`);
       }
     },
 
