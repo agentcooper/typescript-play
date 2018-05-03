@@ -138,10 +138,11 @@ async function main() {
 
   console.log("Url defaults", urlDefaults);
 
-  const compilerOptions = {
-    ...defaultCompilerOptions,
-    ...urlDefaults,
-  };
+  const compilerOptions = Object.assign(
+    {},
+    defaultCompilerOptions,
+    urlDefaults,
+  );
 
   const sharedEditorOptions = {
     minimap: { enabled: false },
@@ -325,9 +326,7 @@ async function main() {
         State.inputModel.getValue(),
       )}`;
 
-      const urlParams = {
-        ...diff,
-      };
+      const urlParams = Object.assign({}, diff);
 
       if (params.has("ts")) {
         urlParams["ts"] = params.get("ts");
