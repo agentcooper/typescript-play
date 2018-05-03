@@ -22,4 +22,4 @@ popd
 mkdir -vp ./public/monaco-typescript/${INSTALLED_VERSION}
 cp -vr ./monaco-typescript/release/min/ ./public/monaco-typescript/${INSTALLED_VERSION}
 
-echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.11.1', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
+echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.12.0', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
