@@ -395,6 +395,7 @@ console.log(message);
   /* Run */
 
   function runJavaScript() {
+    console.clear();
     // to hide the stack trace
     setTimeout(() => {
       eval(State.outputModel.getValue());
