@@ -332,9 +332,13 @@ async function main() {
           })
           .join("&");
 
-        window.history.replaceState({}, "", `/?${queryString}#${hash}`);
+        window.history.replaceState(
+          {},
+          "",
+          `${window.CONFIG.baseUrl}?${queryString}#${hash}`,
+        );
       } else {
-        window.history.replaceState({}, "", `/#${hash}`);
+        window.history.replaceState({}, "", `${window.CONFIG.baseUrl}#${hash}`);
       }
     },
 
