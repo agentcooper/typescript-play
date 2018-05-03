@@ -328,9 +328,11 @@ async function main() {
 
       const urlParams = Object.assign({}, diff);
 
-      if (params.has("ts")) {
-        urlParams["ts"] = params.get("ts");
-      }
+      ["lib", "ts"].forEach(param => {
+        if (params.has(param)) {
+          urlParams[param] = params.get(param);
+        }
+      });
 
       if (Object.keys(urlParams).length > 0) {
         const queryString = Object.entries(urlParams)
