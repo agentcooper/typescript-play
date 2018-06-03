@@ -183,6 +183,18 @@ async function main() {
 
     shouldUpdateHash: false,
 
+    showFlashMessage(message) {
+      const node = document.querySelector(".flash");
+      const messageNode = node.querySelector(".flash__message");
+
+      messageNode.textContent = message;
+
+      node.classList.toggle("flash--hidden", false);
+      setTimeout(() => {
+        node.classList.toggle("flash--hidden", true);
+      }, 1000);
+    },
+
     fetchTooltips: async function() {
       try {
         this.toggleSpinner(true);
@@ -492,15 +504,30 @@ console.log(message);
   );
 
   // if the focus is outside the editor
-  window.addEventListener("keydown", event => {
-    if (
-      event.keyCode === 13 &&
-      (event.metaKey || event.ctrlKey) &&
-      event.target instanceof Node &&
-      event.target === document.body
-    ) {
-      event.preventDefault();
-      runJavaScript();
-    }
-  });
+  window.addEventListener(
+    "keydown",
+    event => {
+      if (event.keyCode == 83 && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+
+        window.clipboard.writeText(location.href.toString()).then(
+          () => UI.showFlashMessage("URL is copied to the clipboard!"),
+          e => {
+            alert(e);
+          },
+        );
+      }
+
+      if (
+        event.keyCode === 13 &&
+        (event.metaKey || event.ctrlKey) &&
+        event.target instanceof Node &&
+        event.target === document.body
+      ) {
+        event.preventDefault();
+        runJavaScript();
+      }
+    },
+    false,
+  );
 }

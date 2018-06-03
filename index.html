@@ -12,6 +12,7 @@
 <body>
 	<script src="env.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/url-search-params/0.10.0/url-search-params.js"></script>
+	<script src="https://unpkg.com/clipboard-polyfill@2.4.7/build/clipboard-polyfill.js"></script>
 	<script src="https://unpkg.com/monaco-editor@0.12.0/min/vs/loader.js"></script>
 	<script>
 		const params = new URLSearchParams(location.search);
@@ -69,6 +70,10 @@
 		});
 	</script>
 	<div id="app">
+		<div class="flash flash--hidden">
+			<span class="flash__message"></span>
+		</div>
+
 		<header>
 
 			<div class="header-item" style="display: flex; flex-direction: row; align-items: center;">
@@ -157,7 +162,11 @@
 						const isMac = navigator.userAgent.indexOf('Mac OS X') != -1;
 						const key = isMac ? '⌘' : 'Ctrl';
 						document.write(`
-							<kbd>Use ${key} + Enter</kbd> to run compiled JavaScript in the browser console.
+							<div><kbd>Use ${key} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
+						`);
+
+						document.write(`
+							<div style="margin-top: 2em;"><kbd>Use ${key} + S</kbd> to copy code url to the clipboard.</div>
 						`);
 					</script>
 				</div>
