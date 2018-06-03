@@ -142,3 +142,33 @@ header a {
   width: 7em;
   margin-left: 1em;
 }
+
+.flash {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 42;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.flash__message {
+  border-radius: 1.5em;
+  padding: 1em 2em;
+  background-color: black;
+  color: white;
+  opacity: 0.7;
+  transition: opacity 0.1s ease-in-out;
+
+  /* help Safari with blurred text */
+  transform: translateZ(0);
+}
+
+.flash--hidden .flash__message {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
