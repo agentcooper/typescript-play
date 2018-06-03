@@ -131,3 +131,14 @@ header a {
     transform: rotate(360deg);
   }
 }
+
+.select-label {
+  display: inline-block;
+  width: 3em;
+}
+
+.select select {
+  display: inline-block;
+  width: 7em;
+  margin-left: 1em;
+}
