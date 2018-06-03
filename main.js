@@ -115,6 +115,7 @@ async function main() {
     experimentalDecorators: false,
 
     target: monaco.languages.typescript.ScriptTarget.ES3,
+    jsx: monaco.languages.typescript.JsxEmit.None,
   };
 
   const urlDefaults = Object.entries(defaultCompilerOptions).reduce(
@@ -154,6 +155,28 @@ async function main() {
     inputModel: null,
     outputModel: null,
   };
+
+  function createSelect(obj, globalPath, title, compilerOption) {
+    return `<label class="select">
+    <span class="select-label">${title}</span>
+  <select onchange="console.log(event.target.value); UI.updateCompileOptions('${compilerOption}', ${globalPath}[event.target.value]);">
+  ${Object.keys(obj)
+    .filter(key => isNaN(Number(key)))
+    .map(key => {
+      if (key === "Latest") {
+        // hide Latest
+        return "";
+      }
+
+      const isSelected = obj[key] === compilerOptions[compilerOption];
+
+      return `<option ${
+        isSelected ? "selected" : ""
+      } value="${key}">${key}</option>`;
+    })}
+  </select>
+  </label>`;
+  }
 
   window.UI = {
     tooltips: {},
@@ -222,27 +245,19 @@ async function main() {
       const node = document.querySelector("#settings-popup");
 
       const html = `
-      <label>
-      Target
-    <select onchange="console.log(event.target.value); UI.updateCompileOptions('target', monaco.languages.typescript.ScriptTarget[event.target.value]);">
-    ${Object.keys(monaco.languages.typescript.ScriptTarget)
-      .filter(key => isNaN(Number(key)))
-      .map(key => {
-        if (key === "Latest") {
-          // hide Latest
-          return "";
-        }
-
-        const isSelected =
-          monaco.languages.typescript.ScriptTarget[key] ===
-          compilerOptions.target;
-
-        return `<option ${
-          isSelected ? "selected" : ""
-        } value="${key}">${key}</option>`;
-      })}
-    </select>
-    </label>
+      ${createSelect(
+        monaco.languages.typescript.ScriptTarget,
+        "monaco.languages.typescript.ScriptTarget",
+        "Target",
+        "target",
+      )}
+      <br />
+      ${createSelect(
+        monaco.languages.typescript.JsxEmit,
+        "monaco.languages.typescript.JsxEmit",
+        "JSX",
+        "jsx",
+      )}
     <ul style="margin-top: 1em;">
     ${Object.entries(compilerOptions)
       .filter(([_, value]) => typeof value === "boolean")
@@ -400,7 +415,7 @@ console.log(message);
   State.inputModel = monaco.editor.createModel(
     UI.getInitialCode(),
     "typescript",
-    monaco.Uri.parse("input.ts"),
+    monaco.Uri.parse("input.tsx"),
   );
 
   State.outputModel = monaco.editor.createModel(
