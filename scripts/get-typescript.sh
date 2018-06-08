@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-NPM_VERSION='latest'
-
+VERSION="$1"
 rm -rf monaco-typescript
 
 set -o nounset
@@ -12,8 +11,11 @@ git clone https://github.com/Microsoft/monaco-typescript
 pushd monaco-typescript
 
 # https://github.com/Microsoft/monaco-typescript#updating-typescript
-npm install typescript@${NPM_VERSION} --save-dev
-npm run import-typescript
+if [ ! -z "$VERSION" ]; then
+  npm install typescript@$VERSION --save-dev
+  npm run import-typescript
+fi
+
 npm install
 INSTALLED_VERSION=`node -p "require('typescript').version"`
 

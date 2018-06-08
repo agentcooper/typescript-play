@@ -12,23 +12,21 @@ Differences from https://www.typescriptlang.org/play:
 * Quicker sharing, URL updates as you type
 * Shorter sharing URLs
 
-## Install
+## Getting started
 
 ```
 npm install
-npm run fetch-schema
-npm run get-typescript
+npm run setup
+npm start
 ```
-
-## Start
-
-`npm start`
 
 ## Updating TypeScript
 
 Playground relies on [UNPKG](https://unpkg.com) to fetch `monaco-editor` (contains `typescript` through `monaco-typescript` package).
 
-In case if `monaco-editor` is not updated to the latest TypeScript, the latest version can be built with `npm run get-typescript` and served locally.
+In case if `monaco-editor` is not updated to the latest TypeScript, the latest version can be built with `npm run get-typescript latest` and served locally.
+
+In case you want to serve some specific version of TypeScript locally you should run `npm run get-typescript <version>`. For example, to serve TypeScript version 2.8.3 you should run `npm run get-typescript 2.8.3; npm start`
 
 ## Browser compatibility
 

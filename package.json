@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "serve ./public",
+    "setup": "npm run fetch-schema",
     "clean": "rm -rf monaco-typescript && rm -rf public/monaco-typescript",
     "get-typescript": "./scripts/get-typescript.sh",
     "deploy": "gh-pages --dist=public",
