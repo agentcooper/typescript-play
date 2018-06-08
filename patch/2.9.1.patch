@@ -1,0 +1,13 @@
+diff --git a/src/tsWorker.ts b/src/tsWorker.ts
+index 89cc368..289ffd8 100644
+--- a/src/tsWorker.ts
++++ b/src/tsWorker.ts
+@@ -144,7 +144,7 @@ export class TypeScriptWorker implements ts.LanguageServiceHost {
+ 	}
+ 
+ 	getCompletionEntryDetails(fileName: string, position: number, entry: string): Promise<ts.CompletionEntryDetails> {
+-		return Promise.as(this._languageService.getCompletionEntryDetails(fileName, position, entry, undefined, undefined));
++		return Promise.as(this._languageService.getCompletionEntryDetails(fileName, position, entry, undefined, undefined, undefined));
+ 	}
+ 
+ 	getSignatureHelpItems(fileName: string, position: number): Promise<ts.SignatureHelpItems> {

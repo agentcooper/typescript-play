@@ -13,6 +13,9 @@ pushd monaco-typescript
 # https://github.com/Microsoft/monaco-typescript#updating-typescript
 if [ ! -z "$VERSION" ]; then
   npm install typescript@$VERSION --save-dev
+
+  git apply ../patch/2.9.1.patch
+
   npm run import-typescript
 fi
 
@@ -24,4 +27,4 @@ popd
 mkdir -vp ./public/monaco-typescript/${INSTALLED_VERSION}
 cp -vr ./monaco-typescript/release/min/ ./public/monaco-typescript/${INSTALLED_VERSION}
 
-echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.12.0', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
+echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.13.1', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
