@@ -14,7 +14,9 @@ pushd monaco-typescript
 if [ ! -z "$VERSION" ]; then
   npm install typescript@$VERSION --save-dev
 
-  git apply ../patch/2.9.1.patch
+  if [ $1 = "2.9.1" ]; then
+    git apply ../patch/2.9.1.patch
+  fi
 
   npm run import-typescript
 fi
