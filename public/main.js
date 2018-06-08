@@ -113,6 +113,7 @@ async function main() {
     skipLibCheck: false,
 
     experimentalDecorators: false,
+    emitDecoratorMetadata: false,
 
     target: monaco.languages.typescript.ScriptTarget.ES3,
     jsx: monaco.languages.typescript.JsxEmit.None,
