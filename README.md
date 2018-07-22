@@ -43,3 +43,8 @@ Tested with:
 * http://hi104.github.io/typescript-playground-on-ace/
 * http://drake7707.github.io/Typescript-Editor/
 * http://niutech.github.io/typescript-interpret/
+
+# Other useful links
+
+* https://typescript-api-playground.glitch.me/ – exlore TS transforms
+* https://ts-ast-viewer.com/ – TS AST viewer
