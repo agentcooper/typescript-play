@@ -233,14 +233,10 @@ async function main() {
     },
 
     renderVersion() {
-      if (!ts.version) {
-        return;
-      }
-
       const node = document.querySelector("#version");
       const childNode = node.querySelector("#version-current");
 
-      childNode.textContent = `${ts.version}`;
+      childNode.textContent = `${window.CONFIG.TSVersion}`;
 
       node.style.opacity = 1;
       node.classList.toggle("popup-on-hover", true);
@@ -293,6 +289,10 @@ async function main() {
     },
 
     console() {
+      if (!window.ts) {
+        return;
+      }
+
       console.log(`Using TypeScript ${window.ts.version}`);
 
       console.log("Available globals:");
