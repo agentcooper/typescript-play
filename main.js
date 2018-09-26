@@ -504,11 +504,17 @@ console.log(message);
     runJavaScript,
   );
 
+  inputEditor.addCommand(
+    monaco.KeyMod.Alt | monaco.KeyMod.Shift | monaco.KeyCode.KEY_F,
+    prettier,
+  );
+
   // if the focus is outside the editor
   window.addEventListener(
     "keydown",
     event => {
-      if (event.keyCode == 83 && (event.metaKey || event.ctrlKey)) {
+      const S_KEY = 83;
+      if (event.keyCode == S_KEY && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
 
         window.clipboard.writeText(location.href.toString()).then(
@@ -531,4 +537,31 @@ console.log(message);
     },
     false,
   );
+
+  function prettier() {
+    const PRETTIER_VERSION = "1.14.3";
+
+    require([
+      `https://unpkg.com/prettier@${PRETTIER_VERSION}/standalone.js`,
+      `https://unpkg.com/prettier@${PRETTIER_VERSION}/parser-typescript.js`,
+    ], function(prettier, { parsers }) {
+      const cursorOffset = State.inputModel.getOffsetAt(
+        inputEditor.getPosition(),
+      );
+
+      const formatResult = prettier.formatWithCursor(
+        State.inputModel.getValue(),
+        {
+          parser: parsers.typescript.parse,
+          cursorOffset,
+        },
+      );
+
+      State.inputModel.setValue(formatResult.formatted);
+      const newPosition = State.inputModel.getPositionAt(
+        formatResult.cursorOffset,
+      );
+      inputEditor.setPosition(newPosition);
+    });
+  }
 }
