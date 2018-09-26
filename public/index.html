@@ -161,13 +161,19 @@
 				<div class="popup" id="run-popup" style="min-width: 20em;">
 					<script>
 						const isMac = navigator.userAgent.indexOf('Mac OS X') != -1;
-						const key = isMac ? '⌘' : 'Ctrl';
+						const CMDCtrl = isMac ? '⌘' : 'Ctrl';
+						const OptionAlt = isMac ? '⌥' : 'Alt';
+
 						document.write(`
-							<div><kbd>Use ${key} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
+							<div><kbd>Use ${CMDCtrl} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
 						`);
 
 						document.write(`
-							<div style="margin-top: 2em;"><kbd>Use ${key} + S</kbd> to copy code url to the clipboard.</div>
+							<div style="margin-top: 2em;"><kbd>Use ${CMDCtrl} + S</kbd> to copy code url to the clipboard.</div>
+						`);
+
+						document.write(`
+							<div style="margin-top: 2em;"><kbd>Use ${OptionAlt} + Shift + F</kbd> to run Prettier.</div>
 						`);
 					</script>
 				</div>
