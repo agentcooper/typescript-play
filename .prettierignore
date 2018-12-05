@@ -1,3 +1,4 @@
 patch/*
 package.json
 package-lock.json
+monaco-typescript/*

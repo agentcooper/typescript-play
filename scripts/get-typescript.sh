@@ -17,8 +17,11 @@ if [ ! -z "$VERSION" ]; then
   if [ $VERSION = "2.9.1" ]; then
     git apply ../patch/2.9.1.patch
   fi
+  if [ $VERSION = "3.2.1" ]; then
+    git apply ../patch/3.2.1.patch
+  fi
 
-  npm run import-typescript
+  npm run prepublishOnly
 fi
 
 npm install
@@ -29,4 +32,4 @@ popd
 mkdir -vp ./public/monaco-typescript/${INSTALLED_VERSION}
 cp -vr ./monaco-typescript/release/min/ ./public/monaco-typescript/${INSTALLED_VERSION}
 
-echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.13.1', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
+echo "window.localTSVersion = { '$INSTALLED_VERSION': { monaco: '0.15.6', lib: '/monaco-typescript/$INSTALLED_VERSION' } }" > public/env.js
