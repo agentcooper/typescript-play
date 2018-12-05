@@ -22,6 +22,7 @@
           window.localTSVersion || {},
           {
             // https://unpkg.com/monaco-editor/
+            "3.1.6": { monaco: "0.15.6" },
             "3.0.1": { monaco: "0.14.3" },
             "2.8.1": { monaco: "0.13.1" },
             "2.7.2": { monaco: "0.11.1" },
@@ -188,16 +189,16 @@
               const OptionAlt = isMac ? "⌥" : "Alt";
 
               document.write(`
-                                                                                                  							<div><kbd>Use ${CMDCtrl} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
-                                                                                                  						`);
+                                                                                                                              							<div><kbd>Use ${CMDCtrl} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
+                                                                                                                              						`);
 
               document.write(`
-                                                                                                  							<div style="margin-top: 2em;"><kbd>Use ${CMDCtrl} + S</kbd> to copy code url to the clipboard.</div>
-                                                                                                  						`);
+                                                                                                                              							<div style="margin-top: 2em;"><kbd>Use ${CMDCtrl} + S</kbd> to copy code url to the clipboard.</div>
+                                                                                                                              						`);
 
               document.write(`
-                                                                                                  							<div style="margin-top: 2em;"><kbd>Use ${OptionAlt} + Shift + F</kbd> to run Prettier.</div>
-                                                                                                  						`);
+                                                                                                                              							<div style="margin-top: 2em;"><kbd>Use ${OptionAlt} + Shift + F</kbd> to run Prettier.</div>
+                                                                                                                              						`);
             </script>
           </div>
         </div>

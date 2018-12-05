@@ -428,13 +428,13 @@ console.log(message);
   State.inputModel = monaco.editor.createModel(
     UI.getInitialCode(),
     "typescript",
-    monaco.Uri.parse("input.tsx"),
+    monaco.Uri.file("input.tsx"),
   );
 
   State.outputModel = monaco.editor.createModel(
     "",
     "javascript",
-    monaco.Uri.parse("output.js"),
+    monaco.Uri.file("output.js"),
   );
 
   const inputEditor = monaco.editor.create(
