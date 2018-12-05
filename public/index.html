@@ -10,7 +10,7 @@
 
   <body>
     <script src="env.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/url-search-params/0.10.0/url-search-params.js"></script>
+    <script src="https://unpkg.com/url-search-params@1.1.0/build/url-search-params.js"></script>
     <script src="https://unpkg.com/clipboard-polyfill@2.4.7/build/clipboard-polyfill.js"></script>
     <script src="https://unpkg.com/monaco-editor@0.12.0/min/vs/loader.js"></script>
     <script>
@@ -188,16 +188,16 @@
               const OptionAlt = isMac ? "⌥" : "Alt";
 
               document.write(`
-                                          							<div><kbd>Use ${CMDCtrl} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
-                                          						`);
+                                                                                                  							<div><kbd>Use ${CMDCtrl} + Enter</kbd> to run compiled JavaScript in the browser console.</div>
+                                                                                                  						`);
 
               document.write(`
-                                          							<div style="margin-top: 2em;"><kbd>Use ${CMDCtrl} + S</kbd> to copy code url to the clipboard.</div>
-                                          						`);
+                                                                                                  							<div style="margin-top: 2em;"><kbd>Use ${CMDCtrl} + S</kbd> to copy code url to the clipboard.</div>
+                                                                                                  						`);
 
               document.write(`
-                                          							<div style="margin-top: 2em;"><kbd>Use ${OptionAlt} + Shift + F</kbd> to run Prettier.</div>
-                                          						`);
+                                                                                                  							<div style="margin-top: 2em;"><kbd>Use ${OptionAlt} + Shift + F</kbd> to run Prettier.</div>
+                                                                                                  						`);
             </script>
           </div>
         </div>
