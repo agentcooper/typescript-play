@@ -1,6 +1,8 @@
-# TypeScript playground
+# [TypeScript playground](https://typescript-play.js.org)
 
-https://agentcooper.github.io/typescript-play/
+A better TypeScript playground.
+
+Website: https://typescript-play.js.org
 
 Differences from https://www.typescriptlang.org/play:
 
