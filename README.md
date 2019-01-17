@@ -50,3 +50,4 @@ Tested with:
 
 * https://typescript-api-playground.glitch.me/ – exlore TS transforms
 * https://ts-ast-viewer.com/ – TS AST viewer
+* https://ts-creator.js.org/ - turn TypeScript code into AST builder expressions
