@@ -172,3 +172,8 @@ header a {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
+
+#settings-popup {
+    overflow-y: auto;
+    max-height: calc( 100vh - 5rem );
+}
