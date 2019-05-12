@@ -493,7 +493,7 @@ console.log(message);
   });
 
   updateOutput();
-  State.inputModel.onDidChangeContent(() => {
+  inputEditor.onDidChangeModelContent(() => {
     updateOutput();
   });
   UI.shouldUpdateHash = true;
