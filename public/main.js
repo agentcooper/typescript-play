@@ -157,6 +157,8 @@ async function main() {
     outputModel: null,
   };
 
+  let inputEditor, outputEditor;
+
   function createSelect(obj, globalPath, title, compilerOption) {
     return `<label class="select">
     <span class="select-label">${title}</span>
@@ -391,6 +393,20 @@ async function main() {
         compilerOptions,
       );
 
+      let inputCode = inputEditor.getValue();
+      State.inputModel.dispose();
+      State.inputModel = monaco.editor.createModel(
+        inputCode,
+        "typescript",
+        monaco.Uri.file(
+          "input." +
+          (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
+            ? "ts"
+            : "tsx")
+        )
+      );
+      inputEditor.setModel(State.inputModel);
+
       UI.refreshOutput();
 
       UI.renderSettings();
@@ -428,7 +444,7 @@ console.log(message);
   State.inputModel = monaco.editor.createModel(
     UI.getInitialCode(),
     "typescript",
-    monaco.Uri.file("input.tsx"),
+    monaco.Uri.file("input.ts"),
   );
 
   State.outputModel = monaco.editor.createModel(
@@ -437,12 +453,12 @@ console.log(message);
     monaco.Uri.file("output.js"),
   );
 
-  const inputEditor = monaco.editor.create(
+  inputEditor = monaco.editor.create(
     document.getElementById("input"),
     Object.assign({ model: State.inputModel }, sharedEditorOptions),
   );
 
-  const outputEditor = monaco.editor.create(
+  outputEditor = monaco.editor.create(
     document.getElementById("output"),
     Object.assign({ model: State.outputModel }, sharedEditorOptions),
   );
