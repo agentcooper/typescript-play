@@ -181,6 +181,15 @@ async function main() {
   </label>`;
   }
 
+  function createFile(compilerOptions) {
+    return monaco.Uri.file(
+      "input." +
+      (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
+        ? "ts"
+        : "tsx")
+    )
+  }
+
   window.UI = {
     tooltips: {},
 
@@ -398,12 +407,7 @@ async function main() {
       State.inputModel = monaco.editor.createModel(
         inputCode,
         "typescript",
-        monaco.Uri.file(
-          "input." +
-          (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
-            ? "ts"
-            : "tsx")
-        )
+        createFile(compilerOptions)
       );
       inputEditor.setModel(State.inputModel);
 
@@ -444,12 +448,7 @@ console.log(message);
   State.inputModel = monaco.editor.createModel(
     UI.getInitialCode(),
     "typescript",
-    monaco.Uri.file(
-      "input." + 
-      (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
-        ? "ts"
-        : "tsx")
-    ),
+    createFile(compilerOptions)
   );
 
   State.outputModel = monaco.editor.createModel(
