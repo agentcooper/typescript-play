@@ -444,7 +444,12 @@ console.log(message);
   State.inputModel = monaco.editor.createModel(
     UI.getInitialCode(),
     "typescript",
-    monaco.Uri.file("input.ts"),
+    monaco.Uri.file(
+      "input" + 
+      (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
+        ? "ts"
+        : "tsx")
+    ),
   );
 
   State.outputModel = monaco.editor.createModel(
