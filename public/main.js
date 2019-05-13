@@ -445,7 +445,7 @@ console.log(message);
     UI.getInitialCode(),
     "typescript",
     monaco.Uri.file(
-      "input" + 
+      "input." + 
       (compilerOptions.jsx === monaco.languages.typescript.JsxEmit.None
         ? "ts"
         : "tsx")
