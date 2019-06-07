@@ -1,0 +1,24 @@
+diff --git a/src/tsconfig.esm.json b/src/tsconfig.esm.json
+index b95798a..6efc6a0 100644
+--- a/src/tsconfig.esm.json
++++ b/src/tsconfig.esm.json
+@@ -8,6 +8,7 @@
+       "dom",
+       "es5",
+       "es2015.collection",
++      "es2015.iterable",
+       "es2015.promise"
+     ]
+   },
+diff --git a/src/tsconfig.json b/src/tsconfig.json
+index f4ff52f..778087c 100644
+--- a/src/tsconfig.json
++++ b/src/tsconfig.json
+@@ -8,6 +8,7 @@
+       "dom",
+       "es5",
+       "es2015.collection",
++      "es2015.iterable",
+       "es2015.promise"
+     ]
+   },

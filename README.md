@@ -27,6 +27,8 @@ npm start
 Playground relies on [UNPKG](https://unpkg.com) to fetch `monaco-editor` (contains `typescript` through [`monaco-typescript`](https://github.com/Microsoft/monaco-typescript) package).
 
 In case if `monaco-editor` is not updated to the latest TypeScript, the latest version can be built with `npm run get-typescript latest` and served locally.
+If you run into errors, the latest monaco version may be incompatible with the latest typescript version,
+in which case you'll need to update monaco-typescript upstream, or apply a patch locally (see the `# Patches` section in [get-typescript.sh](scripts/get-typescript.sh).
 
 In case you want to serve some specific version of TypeScript locally you should run `npm run get-typescript <version>`. For example, to serve TypeScript version 2.8.3 you should run `npm run get-typescript 2.8.3; npm start`
 
