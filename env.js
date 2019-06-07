@@ -1,1 +1,1 @@
-window.localTSVersion = { '3.2.1': { monaco: '0.15.6', lib: '/monaco-typescript/3.2.1' } }
+window.localTSVersion = { '3.5.1': { monaco: 'latest', lib: '/monaco-typescript/3.5.1' } }
