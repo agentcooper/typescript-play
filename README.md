@@ -1,3 +1,9 @@
+
+⚠️ **Please use [the offical TypeScript playground](http://www.typescriptlang.org/play/index.html), now it has all the same features and even more. Use https://github.com/microsoft/TypeScript-Website/issues for issues and questions.**
+
+<hr />
+
+
 # [TypeScript playground](https://typescript-play.js.org)
 
 A better TypeScript playground.
